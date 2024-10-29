@@ -14,7 +14,7 @@ git clone https://github.com/felipebcv2/teste-xp.git
 
 Na raiz do projeto, execute o comando abaixo para construir e iniciar os containers. Aguarde até todos os containers finalizarem todos os processos:
 ```bash
-docker compose build --no-cache && docker compose up -d
+docker compose build --no-cache && docker compose up
 ```
 > **Nota:** O diretório `vendor` e o arquivo `.env` foram incluídos no repositório para simplificar o processo de execução, uma vez que se trata de um sistema de teste.
 
