@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('login');
+
+
 Route::get('/login', function () {
+    dd('teste');
     return response()->json(['message' => 'Please login.'], 401);
 })->name('login');

@@ -80,6 +80,29 @@
                 }
             }
         },
+        "/api/v1/reports/tasks": {
+            "post": {
+                "tags": [
+                    "Relatórios"
+                ],
+                "summary": "Solicitar relatório de tarefas",
+                "description": "Gera um relatório das tarefas do usuário autenticado e envia por e-mail.",
+                "operationId": "f9ed6aca0fd4a81fed6607646ee24d14",
+                "responses": {
+                    "202": {
+                        "description": "Solicitação de relatório aceita."
+                    },
+                    "500": {
+                        "description": "Erro ao processar solicitação de relatório."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/tasks": {
             "get": {
                 "tags": [
@@ -412,6 +435,10 @@
         {
             "name": "Autenticação",
             "description": "Autenticação"
+        },
+        {
+            "name": "Relatórios",
+            "description": "Relatórios"
         },
         {
             "name": "Tasks",

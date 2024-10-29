@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,5 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('/tasks/{task}/start', [TaskController::class, 'start']);
     Route::put('/tasks/{task}', [TaskController::class, 'update']);
     Route::post('/tasks/{task}/complete', [TaskController::class, 'complete']);
+    Route::post('/reports/tasks', [ReportController::class, 'requestReport']);
 });

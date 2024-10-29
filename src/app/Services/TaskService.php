@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Jobs\SendTaskCompletedNotification;
+use App\Jobs\SendTaskCreatedNotification;
+use App\Jobs\SendTaskUpdatedNotification;
 use App\Models\Task;
 use App\Models\User;
 use App\Services\Interfaces\TaskServiceInterface;
@@ -20,7 +23,11 @@ class TaskService implements TaskServiceInterface
     public function createTask(array $data): Task
     {
         $data['user_id'] = Auth::id();
-        return $this->taskRepository->create($data);
+        $task = $this->taskRepository->create($data);
+
+        SendTaskCreatedNotification::dispatch($task, Auth::user());
+
+        return $task;
     }
 
     public function getAllTasks(User $user)
@@ -40,11 +47,15 @@ class TaskService implements TaskServiceInterface
 
     public function updateTask(Task $task, array $data)
     {
-        return $this->taskRepository->update($task, $data);
+        $task = $this->taskRepository->update($task, $data);
+        SendTaskUpdatedNotification::dispatch($task, Auth::user());
+        return $task;
     }
-
     public function completeTask(Task $task)
     {
-        return $this->taskRepository->updateStatus($task, 'Completed');
+        $task = $this->taskRepository->updateStatus($task, 'Completed');
+        SendTaskCompletedNotification::dispatch($task, Auth::user());
+
+        return $task;
     }
 }
