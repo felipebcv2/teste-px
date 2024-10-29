@@ -12,7 +12,7 @@ interface TaskServiceInterface
 
     public function getAllTasks(User $user);
 
-    public function getTask(Task $task);
+    public function getTask(int $taskId);
 
     public function startTask(Task $task);
 

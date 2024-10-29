@@ -16,10 +16,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Teste PX',
-            'email' => 'teste@px.com',
-            'password' => Hash::make('@3das$dasst341#08787jh'),
-        ]);
+        if (!User::where('email', 'teste@px.com')->exists()) {
+            User::create([
+                'name' => 'Teste PX',
+                'email' => 'teste@px.com',
+                'password' => bcrypt('password'),
+            ]);
+        }
     }
 }
