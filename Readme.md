@@ -27,6 +27,13 @@ Após iniciar o sistema, você pode acessar a documentação Swagger da API atra
 
 Para utilizar os endpoints da API, é necessário gerar um token. Esta API utiliza o Laravel Sanctum para gerenciamento de tokens. Após a geração, o token do usuário de teste pode ser inserido no Swagger:
 
+```bash
+{
+    "email": "teste@px.com",
+    "password": "@3das$dasst341#08787jh"
+}
+```
+
 - Clique no botão **"Authorize"** no canto superior direito da interface do Swagger.
 - Insira o token gerado para obter acesso aos endpoints. 
 > **Nota:** O token gerado possui uma expiração de 60 minutos.
