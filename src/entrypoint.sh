@@ -9,3 +9,8 @@ until php artisan migrate --force; do
   echo "Esperando pelo banco de dados..."
   sleep 5
 done
+
+until php artisan db:seed; do
+  echo "Esperando pelo banco de dados..."
+  sleep 5
+done
