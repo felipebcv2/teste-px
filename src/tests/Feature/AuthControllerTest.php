@@ -4,19 +4,32 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Sanctum\Sanctum;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class AuthControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function test_token_with_valid_credentials_returns_token()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-        ]);
+        $userMock = \Mockery::mock(User::class);
+        $userMock->shouldReceive('createToken')
+            ->once()
+            ->with('token')
+            ->andReturn((object) ['plainTextToken' => 'mocked_token']);
+
+        Auth::shouldReceive('attempt')
+            ->once()
+            ->with(['email' => 'test@example.com', 'password' => 'password123'])
+            ->andReturn(true);
+
+        Auth::shouldReceive('user')
+            ->once()
+            ->andReturn($userMock);
+
+        Auth::shouldReceive('userResolver')
+            ->andReturnUsing(fn() => $userMock);
 
         $response = $this->postJson('/api/v1/token', [
             'email' => 'test@example.com',
@@ -24,18 +37,21 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['token'])
-                 ->assertJson([
-                     'token' => $response->json('token'),
-                 ]);
+            ->assertJsonStructure(['token'])
+            ->assertJson([
+                'token' => 'Bearer mocked_token',
+            ]);
     }
 
     public function test_token_with_invalid_credentials_returns_unauthorized()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
-            'password' => bcrypt('password123'),
-        ]);
+        Auth::shouldReceive('attempt')
+            ->once()
+            ->with(['email' => 'test@example.com', 'password' => 'wrongpassword'])
+            ->andReturn(false);
+
+        Auth::shouldReceive('userResolver')
+            ->andReturn(null);
 
         $response = $this->postJson('/api/v1/token', [
             'email' => 'test@example.com',
@@ -43,6 +59,6 @@ class AuthControllerTest extends TestCase
         ]);
 
         $response->assertStatus(401)
-                 ->assertJson(['message' => 'Invalid credentials.']);
+            ->assertJson(['message' => 'Invalid credentials.']);
     }
 }

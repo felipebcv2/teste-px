@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/v1/token', [AuthController::class, 'token']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-
-    // Rotas dos produtos (exemplo)
-    // Route::apiResource('produtos', ProdutoController::class);
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::get('/tasks', [TaskController::class, 'index']);
+    Route::post('/tasks', [TaskController::class, 'store']);
+    Route::get('/tasks/{task}', [TaskController::class, 'show']);
+    Route::post('/tasks/{task}/start', [TaskController::class, 'start']);
+    Route::put('/tasks/{task}', [TaskController::class, 'update']);
+    Route::post('/tasks/{task}/complete', [TaskController::class, 'complete']);
 });
