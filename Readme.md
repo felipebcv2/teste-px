@@ -12,7 +12,7 @@ git clone https://github.com/felipebcv2/teste-xp.git
 
 ## 2. Executar o Sistema com Docker
 
-Na raiz do projeto, execute o comando abaixo para construir e iniciar os containers. Este comando irá garantir que a aplicação e o banco de dados estejam completamente configurados:
+Na raiz do projeto, execute o comando abaixo para construir e iniciar os containers. Aguarde até todos os containers finalizarem todos os processos:
 ```bash
 docker compose build --no-cache && docker compose up -d
 ```
