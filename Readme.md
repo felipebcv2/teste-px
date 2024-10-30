@@ -1,7 +1,7 @@
 
 # Projeto de Teste para PX Motorista
 
-Este repositório contém o código de um sistema API desenvolvido como parte de um desafio técnico para a vaga de desenvolvedor na PX Motorista. Abaixo seguem as instruções para configuração, execução e uso do sistema.
+Este repositório contém o código de um sistema API desenvolvido como parte de um desafio técnico para a vaga de desenvolvedor na empresa PX Motorista. Abaixo seguem as instruções para configuração, execução e uso do sistema.
 
 ## 1. Clonar o Repositório
 
